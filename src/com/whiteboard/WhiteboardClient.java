@@ -16,22 +16,23 @@ public class WhiteboardClient {
 
         out = new ObjectOutputStream(socket.getOutputStream());
         in = new ObjectInputStream(socket.getInputStream());
+        
+        // Ask for user name BEFORE board opens
+        String username = JOptionPane.showInputDialog("Enter your username:");
+        if (username == null || username.trim().isEmpty()) {
+            username = "Anonymous";
+        }
 
         // Setup GUI frame
         JFrame frame = new JFrame("Collaborative Whiteboard");
 
-        // Panel for controls (user name, buttons, slider)
+        // Panel for controls (buttons, slider)
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        // User name input
-        JLabel usernameLabel = new JLabel("Username:");
-        JTextField usernameField = new JTextField(10);
-        buttonPanel.add(usernameLabel);
-        buttonPanel.add(usernameField);
 
         // Create draw panel (pass usernameField)
-        drawPanel = new DrawPanel(out, usernameField, Color.BLACK);
+        drawPanel = new DrawPanel(out, username, Color.BLACK);
 
         // Color picker button
         JButton colorPicker = new JButton("Pick Color");

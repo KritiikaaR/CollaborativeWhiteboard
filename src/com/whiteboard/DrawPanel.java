@@ -14,14 +14,14 @@ public class DrawPanel extends JPanel {
     private int prevX, prevY;
     private ObjectOutputStream out;
 
-    private JTextField usernameField;
+    private String username;
     private Color color;
     private int brushSize = 3;
     private boolean eraserMode = false;
 
-    public DrawPanel(ObjectOutputStream out, JTextField usernameField, Color color) {
+    public DrawPanel(ObjectOutputStream out, String username, Color color) {
         this.out = out;
-        this.usernameField = usernameField;
+        this.username = username;
         this.color = color;
 
         addMouseListener(new MouseAdapter() {
@@ -38,11 +38,9 @@ public class DrawPanel extends JPanel {
         addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
                 if (eraserMode) return;
-
                 int x = e.getX();
                 int y = e.getY();
-                String currentUsername = usernameField.getText().trim();
-                if (currentUsername.isEmpty()) currentUsername = "Anonymous";
+                String currentUsername = DrawPanel.this.username;
 
                 LineSegment line = new LineSegment(prevX, prevY, x, y, color, currentUsername, brushSize);
                 addLine(line);
@@ -81,8 +79,7 @@ public class DrawPanel extends JPanel {
 
     public void undoLastLine() {
         synchronized (lines) {
-            String currentUsername = usernameField.getText().trim();
-            if (currentUsername.isEmpty()) currentUsername = "Anonymous";
+            String currentUsername = this.username;
 
             for (int i = lines.size() - 1; i >= 0; i--) {
                 LineSegment line = lines.get(i);
