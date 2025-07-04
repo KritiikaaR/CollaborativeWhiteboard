@@ -9,11 +9,6 @@ Save as image: Export the board as a PNG snapshot.
 Simple, responsive UI built with Java Swing.
 
 
-Screenshots
-![Collaborative Whiteboard Screenshot](whiteboard_1751522144993.png)
-
-
-
 💻 How to Run
 
 1. Start the server  
